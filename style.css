@@ -57,6 +57,16 @@ body {
     color: white;
 }
 
+#status {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:6vw;
+    font-family: sans-serif;
+    margin-bottom: 10vw;
+
+}
 
 #overlay {
     position:absolute;

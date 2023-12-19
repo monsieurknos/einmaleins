@@ -5,12 +5,13 @@ window.addEventListener('load', function() {
     let overlay = document.getElementById('overlay');
 
     function myRand() {
-        return Math.floor(Math.pow(Math.random(), 0.8)*9+2);
+        return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
     }
 
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
+    let startzeit = new Date();
 
     function neueRechnung() {
         let a = myRand();
@@ -21,9 +22,18 @@ window.addEventListener('load', function() {
         richtig.innerText = rechnung.innerText + " = " + geheim;
     }
 
+    function statistik() {
+        let prozent = Math.floor(korrekt/(korrekt+falsch)*100+0.5);
+        let zeit = Math.round((new Date() - startzeit)/100/korrekt)/10;
+        document.getElementById('prozent').innerText = prozent;
+        document.getElementById('sekunden').innerText = zeit;
+
+    }
+
     function pruefe() {
         if (resultat.innerText == geheim) {
             korrekt+=1;
+            statistik();
             neueRechnung();
         } else {
             falsch += 1;
