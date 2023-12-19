@@ -1,6 +1,8 @@
 window.addEventListener('load', function() {
     let resultat = document.getElementById('resultat');
     let rechnung = document.getElementById('rechnung');
+    let richtig = document.getElementById('richtig');
+    let overlay = document.getElementById('overlay');
 
     function myRand() {
         return Math.floor(Math.pow(Math.random(), 0.8)*9+2);
@@ -16,6 +18,7 @@ window.addEventListener('load', function() {
         geheim = a*b;
         rechnung.innerText = `${a} · ${b}`
         resultat.innerText = "";
+        richtig.innerText = rechnung.innerText + " = " + geheim;
     }
 
     function pruefe() {
@@ -25,6 +28,7 @@ window.addEventListener('load', function() {
         } else {
             falsch += 1;
             resultat.innerText = "";
+            overlay.style.display = "flex";
         }
 
     }
@@ -53,6 +57,10 @@ window.addEventListener('load', function() {
         document.querySelectorAll("#keypad div").forEach((el)=>{
             el.addEventListener('click', klick);
         });
+        document.getElementById('weiter').addEventListener('click', (ev)=>{
+            overlay.style.display = "none";
+        });
+
     }
 
     init_keypad();
