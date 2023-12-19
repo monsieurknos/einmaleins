@@ -1,8 +1,9 @@
-const einmaleins = "einmaleins-v4"
+const einmaleins = "einmaleins-v5"
 const assets = [
   "./index.html",
   "./style.css",
   "./ui.js",
+  "./bg.jpg",
 ]
 
 self.addEventListener("install", installEvent => {

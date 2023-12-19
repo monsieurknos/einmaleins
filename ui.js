@@ -12,10 +12,31 @@ window.addEventListener('load', function() {
     let korrekt = 0;
     let falsch = 0;
     let startzeit = new Date();
+    let rechnungen = [];
+    let naechste = [];
+    let anzahlNaechste = 3;
+
+    function naechsteFuellen() {
+        let indecies = new Array(rechnungen.length).fill(0).map((e,i)=>i);
+        indecies.sort((a,b)=>rechnungen[a].score-rechnungen[b].score+Math.random()-0.5);
+        let i = 0;
+        while (naechste.length<anzahlNaechste) {
+            let j = indecies[i];
+            if (!naechste.includes(j)) {
+                naechste.push(j);
+            }
+            i++;
+        }
+    }
 
     function neueRechnung() {
-        let a = myRand();
-        let b = myRand();
+        naechste.shift();
+        naechsteFuellen();
+        console.log("-------");
+        for (let n of naechste) console.log(rechnungen[n]);
+        let neu = rechnungen[naechste[0]];
+        let a = neu.a;
+        let b = neu.b;
         geheim = a*b;
         rechnung.innerText = `${a} · ${b}`
         resultat.innerText = "";
@@ -33,10 +54,15 @@ window.addEventListener('load', function() {
 
     function pruefe() {
         if (resultat.innerText == geheim) {
+            rechnungen[naechste[0]].score+=1;
             korrekt+=1;
             statistik();
             neueRechnung();
         } else {
+            if (naechste[naechste.length-1]!=naechste[0]) {
+                naechste.push(naechste[0]);
+            }
+            rechnungen[naechste[0]].score-=3;
             falsch += 1;
             resultat.innerText = "";
             overlay.style.display = "flex";
@@ -84,8 +110,17 @@ window.addEventListener('load', function() {
         }
     }
 
+    function initRechnungen() {
+        for (let a=2; a<=10; a++) {
+            for (let b=2; b<=10; b++) {
+                rechnungen.push({"a":a, "b":b, "score":0})
+            }
+        }
+        naechsteFuellen();
+    }
     initWebWorker();
     init_keypad();
+    initRechnungen();
     neueRechnung();
 
 });
