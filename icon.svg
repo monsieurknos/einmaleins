@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="36.171501mm"
+   height="36.171501mm"
+   viewBox="0 0 36.171501 36.171501"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.4627806"
+     inkscape:cx="-121.68606"
+     inkscape:cy="-64.944805"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter26836"
+       x="-0.022153746"
+       y="-0.024406285"
+       width="1.0560123"
+       height="1.0772887">
+      <feFlood
+         flood-opacity="0.513726"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood26826" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite26828" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="0.21052574043843283"
+         result="blur"
+         id="feGaussianBlur26830" />
+      <feOffset
+         dx="0.26695201381289735"
+         dy="0.58951680456782185"
+         result="offset"
+         id="feOffset26832" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite26834" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-30.801636,-66.295475)">
+    <g
+       id="g28811"
+       inkscape:export-filename="/home/ivo/einmaleins/icon512.png"
+       inkscape:export-xdpi="359.53"
+       inkscape:export-ydpi="359.53">
+      <circle
+         style="fill:#ff7f2a;fill-rule:evenodd;stroke-width:0.264583;stroke-linecap:round;stroke-dasharray:0.264583, 0.79375"
+         id="path26626"
+         cx="48.887386"
+         cy="84.381226"
+         r="18.085751" />
+      <text
+         xml:space="preserve"
+         style="font-size:6.35px;line-height:1.25;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans';letter-spacing:0.264583px;stroke-width:0.264583;filter:url(#filter26836)"
+         x="37.365273"
+         y="77.258766"
+         id="text6986"><tspan
+           sodipodi:role="line"
+           id="tspan6984"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Helvetica Rounded';-inkscape-font-specification:'Helvetica Rounded';stroke-width:0.264583"
+           x="37.365273"
+           y="77.258766">Ein</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Helvetica Rounded';-inkscape-font-specification:'Helvetica Rounded';stroke-width:0.264583"
+           x="37.365273"
+           y="85.228577"
+           id="tspan13126">  mal</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Helvetica Rounded';-inkscape-font-specification:'Helvetica Rounded';stroke-width:0.264583"
+           x="37.365273"
+           y="93.19838"
+           id="tspan13128">    Eins</tspan></text>
+    </g>
+  </g>
+</svg>

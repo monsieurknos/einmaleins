@@ -1,0 +1,16 @@
+{
+    "name": "Einmaleins",
+    "short_name": "Einmaleins",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#fdfdfd",
+    "theme_color": "#db4938",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "icon512.png",
+        "type": "image/png", "sizes": "512x512"
+      }
+    ]
+  }
+  
