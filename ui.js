@@ -27,6 +27,7 @@ window.addEventListener('load', function() {
         let zeit = Math.round((new Date() - startzeit)/100/korrekt)/10;
         document.getElementById('prozent').innerText = prozent;
         document.getElementById('sekunden').innerText = zeit;
+        document.getElementById('anzahl').innerText = korrekt;
 
     }
 
@@ -45,7 +46,6 @@ window.addEventListener('load', function() {
 
     function klick(ev) {
         key = this.innerText;
-        console.log(key);
         if (key=="⌫") {
             if (resultat.innerText.length>0) {
                 resultat.innerText = resultat.innerText.substring(0, resultat.innerText.length-1);

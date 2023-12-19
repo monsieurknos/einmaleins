@@ -1,3 +1,7 @@
+:root {
+    --my-width: calc(min(1vw, 0.6vh));
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -8,28 +12,28 @@ body {
 }
 
 .aufgabe {
-    font-size: 12vw;
+    font-size: calc(var(--my-width) * 12);
     font-family: sans-serif;
     font-weight: bold;
-    padding-bottom: 15vw;
+    padding-bottom: calc(var(--my-width) * 15);
 }
 
 #keypad {
     display: grid;
-    grid-template-columns: repeat(4, 20vw);
-    grid-template-rows: repeat(4, 20vw);
-    grid-gap: 1vw;
+    grid-template-columns: repeat(4, calc(var(--my-width) * 20));
+    grid-template-rows: repeat(4, calc(var(--my-width) * 20));
+    grid-gap: calc(var(--my-width) * 1);
 }
 
 .key {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 10vw;
+    font-size: calc(var(--my-width) * 10);
     font-family: sans-serif;
     font-weight: bold;
-    border: 1vw solid #888;
-    border-radius: 3vw;    
+    border: calc(var(--my-width) * 1) solid #888;
+    border-radius: calc(var(--my-width) * 3);    
     cursor: pointer;
 }
 
@@ -58,14 +62,16 @@ body {
 }
 
 #status {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size:6vw;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: calc(var(--my-width) * 5);
+    font-size:calc(var(--my-width) * 6);
     font-family: sans-serif;
-    margin-bottom: 10vw;
+    margin-bottom: calc(var(--my-width) * 10);
 
+}
+#status div {
+    display: flex;
 }
 
 #overlay {
@@ -75,15 +81,15 @@ body {
     height:90vh;
     right:5vw;
     top:5vh;
-    font-size: 10vw;
+    font-size: calc(var(--my-width) * 10);
     font-family: sans-serif;
     font-weight: bold;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 3vw solid #333;
-    border-radius: 12vw;    
+    border: calc(var(--my-width) * 3) solid #333;
+    border-radius: calc(var(--my-width) * 12);    
     box-sizing: border-box;
 }
 
@@ -92,11 +98,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width:80vw;
-    height:40vw;
+    width:calc(var(--my-width) * 80);
+    height:calc(var(--my-width) * 40);
     background-color: #fdd;
     border: 1vw solid #333;
-    border-radius: 12vw;    
+    border-radius: calc(var(--my-width) * 12);    
     box-sizing: border-box;
-    margin-top:10vw;
+    margin-top:calc(var(--my-width) * 10);
 }
