@@ -3,6 +3,7 @@ window.addEventListener('load', function() {
     let rechnung = document.getElementById('rechnung');
     let richtig = document.getElementById('richtig');
     let overlay = document.getElementById('overlay');
+    let settings = document.getElementById('settings');
 
     function myRand() {
         return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
@@ -15,8 +16,61 @@ window.addEventListener('load', function() {
     let letzteRichtig = 0;
     let durchschnitt = 0;
     let rechnungen = [];
+    let gewaehlteReihen = new Array(11).fill(true);
+    gewaehlteReihen[10] = false;
     let naechste = [];
     let anzahlNaechste = 3;
+
+    function saveReihen() {
+        window.localStorage.setItem("einmaleinsreihen", JSON.stringify(gewaehlteReihen));
+    }
+
+    function loadReihen() {
+        let json = window.localStorage.getItem("einmaleinsreihen");
+        if (json) {
+            try {
+                let reihen = JSON.parse(json);
+                if (reihen.length == 11) {
+                    reihen.forEach((e,i)=>gewaehlteReihen[i]= e);
+                    gewaehlteReihen[10] = false;
+                }
+            } catch (e) {
+                //console.log(e);
+            }
+        }
+    }
+
+    function saveScores() {
+        let scores = rechnungen.map(e=>e.score);
+        window.localStorage.setItem("einmaleinsscores", JSON.stringify(scores));
+        //console.log("scores saved");
+    }
+
+    function loadScores() {
+        let json = window.localStorage.getItem("einmaleinsscores");
+        if (json) {
+            try {
+                let scores = JSON.parse(json);
+                if (scores.length == rechnungen.length) {
+                    scores.forEach((e,i)=>rechnungen[i].score = e);
+                    //console.log("scores loaded");
+                } else {
+                    //console.log("scores with wrong length");
+                }
+            } catch (e) {
+                //console.log(e);
+            }
+        } else {
+            //console.log("no scores stored");
+        }
+    }
+
+    function resetScores() {
+        for (r of rechnungen) {
+            r.score = 0;
+        }
+        saveScores();
+    }
 
     function clearStats() {
         korrekt = 0;
@@ -31,7 +85,8 @@ window.addEventListener('load', function() {
         let i = 0;
         while (naechste.length<anzahlNaechste) {
             let j = indecies[i];
-            if (!naechste.includes(j)) {
+            let r = rechnungen[j];
+            if ((!naechste.includes(j)) && (gewaehlteReihen[r.a] || gewaehlteReihen[r.b])) {
                 naechste.push(j);
             }
             i++;
@@ -76,19 +131,25 @@ window.addEventListener('load', function() {
             }
             letzteRichtig = new Date();
             rechnungen[naechste[0]].score+=addScore;
+            if (rechnungen[naechste[0]].score>5) {
+                rechnungen[naechste[0]].score = 5;
+            }
             korrekt+=1;
             statistik();
             neueRechnung();
         } else {
             if (naechste[naechste.length-1]!=naechste[0]) {
                 naechste.push(naechste[0]);
+                rechnungen[naechste[0]].score-=3;
+                if (rechnungen[naechste[0]].score<-5) {
+                    rechnungen[naechste[0]].score = -5;
+                }
+                if (korrekt>0) falsch += 1;
             }
-            rechnungen[naechste[0]].score-=3;
-            if (korrekt>0) falsch += 1;
             resultat.innerText = "";
             overlay.style.display = "flex";
         }
-
+        saveScores();
     }
 
     function processKey(key) {
@@ -131,7 +192,7 @@ window.addEventListener('load', function() {
         if (key=="Backspace") processKey("⌫");
     });
 
-    function init_keypad() {
+    function init_ui() {
         document.querySelectorAll("#keypad div").forEach((el)=>{
             el.addEventListener('click', klick);
         });
@@ -141,7 +202,31 @@ window.addEventListener('load', function() {
         document.getElementById('clearstats').addEventListener('click', (ev)=>{
             clearStats();
         });
+        document.getElementById('hamburger').addEventListener('click', ()=>{
+            settings.style.display = "flex";
+        });
+        document.getElementById('oksettings').addEventListener('click', ()=>{
+            settings.style.display = "none";
+            naechste = [];
+            clearStats();
+            resetScores();
+            neueRechnung();
+        });
+        loadReihen();
+        document.querySelectorAll("#reihen div").forEach(e=>{
+            console.log(e);
+            let r = e.innerText;
+            e.className = gewaehlteReihen[r] ? "on" : "off";
+            e.addEventListener('click', function(e) {
+                let r = this.innerText;
+                gewaehlteReihen[r] = !gewaehlteReihen[r];
+                this.className = gewaehlteReihen[r] ? "on" : "off";
+                saveReihen();
+            });
+        });
+
         overlay.style.display = "none";
+        settings.style.display = "none";
     }
 
     function initWebWorker() {
@@ -161,10 +246,11 @@ window.addEventListener('load', function() {
                 rechnungen.push({"a":a, "b":b, "score":0})
             }
         }
+        loadScores();
         naechsteFuellen();
     }
     initWebWorker();
-    init_keypad();
+    init_ui();
     initRechnungen();
     neueRechnung();
 

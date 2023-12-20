@@ -108,8 +108,53 @@ body {
     box-shadow: calc(var(--my-width) * 2) calc(var(--my-width) * 2) calc(var(--my-width) * 2) #004;
 }
 
+#settings {
+    position:absolute;
+    background-image:linear-gradient(150deg,  #fff 0%, #aaf 50%, #88f 73%);
+    width:90vw;
+    height:90vh;
+    right:5vw;
+    top:5vh;
+    font-size: calc(var(--my-width) * 10);
+    font-family: sans-serif;
+    font-weight: bold;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: calc(var(--my-width) * 3) solid #333;
+    border-radius: calc(var(--my-width) * 12);    
+    box-sizing: border-box;
+    box-shadow: calc(var(--my-width) * 2) calc(var(--my-width) * 2) calc(var(--my-width) * 2) #004;
+}
 
-#weiter {
+#settings:first-child {
+    font-size: calc(var(--my-width) * 20);
+}
+
+#reihen {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: calc(var(--my-width) * 5);
+    grid-row-gap: calc(var(--my-width) * 5);
+    justify-content: center;
+    align-items: center;
+}
+
+#reihen div {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(var(--my-width) * 15);
+    border: calc(var(--my-width) * 1) solid;
+    border-color: #444 #ccc #bbb #333;
+    border-radius: calc(var(--my-width) * 2);    
+    cursor: pointer;
+    box-shadow: calc(var(--my-width) * 1) calc(var(--my-width) * 1) calc(var(--my-width) * 1.5) #004;
+}
+
+.weiter {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,10 +164,26 @@ body {
     border: 1vw solid #333;
     border-radius: calc(var(--my-width) * 12);    
     box-sizing: border-box;
-    margin-top:calc(var(--my-width) * 10);
+    margin-top:calc(var(--my-width) * 5);
 }
 
+.on {
+    background-image:linear-gradient(150deg,  #fff 0%, #afa 50%, #0f0 73%);
+}
+
+.off {
+    background-image:linear-gradient(150deg,  #844 0%, #622 50%, #400 73%);
+}
 #richtig {
     font-size: calc(var(--my-width) * 15);
     text-shadow: calc(var(--my-width) * 1) calc(var(--my-width) * 1) calc(var(--my-width) * 1.5) rgb(255, 255, 255);
+}
+
+#hamburger {
+    position:absolute;
+    width:calc(var(--my-width) * 12);
+    height:calc(var(--my-width) * 12);
+    right:calc(var(--my-width) * 2);
+    top:calc(var(--my-width) * 2);
+    font-size: calc(var(--my-width) * 12);
 }
