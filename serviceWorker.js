@@ -74,9 +74,10 @@ self.addEventListener("install", installEvent => {
 self.addEventListener("fetch", fetchEvent => {
     fetchEvent.respondWith(
       caches.match(fetchEvent.request).then(res => {
+        console.log("upToDate = "+self.upToDate);
         // cache first is ok, but store in cache on reloads!
         if (res && self.upToDate) return res;
-        
+        console.log("Attempt to fetch "+fetchEvent.request.url) 
         // see https://stackoverflow.com/questions/33262385/service-worker-force-update-of-new-assets
         //  return res || fetch(fetchEvent.request)
         // IMPORTANT: Clone the request. A request is a stream and
@@ -85,32 +86,36 @@ self.addEventListener("fetch", fetchEvent => {
         // to clone the response
         var fetchRequest = fetchEvent.request.clone();
         let url = fetchEvent.request.url;
+        try {
+          return fetch(fetchRequest).then(
+            function(response) {
+              // Check if we received a valid response
+              if(!response || response.status !== 200 || response.type !== 'basic' || url.substring(0,8)!=="https://") {
+                return response;
+              }
+              // Check if we cache this resource at all (still bogous)
+              if (assets.every((a)=>!url.endsWith(a))) {
+                return response;
+              }
 
-        return fetch(fetchRequest).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic' || url.substring(0,8)!=="https://") {
+              // IMPORTANT: Clone the response. A response is a stream
+              // and because we want the browser to consume the response
+              // as well as the cache consuming the response, we need
+              // to clone it so we have 2 stream.
+              var responseToCache = response.clone();
+
+              caches.open(einmaleins)
+                .then(function(cache) {
+                  cache.put(fetchEvent.request, responseToCache);
+                });
+
               return response;
             }
-            // Check if we cache this resource at all (still bogous)
-            if (assets.every((a)=>!url.endsWith(a))) {
-              return response;
-            }
-
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have 2 stream.
-            var responseToCache = response.clone();
-
-            caches.open(einmaleins)
-              .then(function(cache) {
-                cache.put(fetchEvent.request, responseToCache);
-              });
-
-            return response;
-          }
         );
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
       })
     );
   });
