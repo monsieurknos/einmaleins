@@ -1,4 +1,5 @@
-const einmaleins = "einmaleins-v6"
+// Version 0.1
+const einmaleins = "einmaleins"
 const assets = [
   "index.html",
   "style.css",
