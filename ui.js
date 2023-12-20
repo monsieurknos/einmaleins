@@ -16,8 +16,7 @@ window.addEventListener('load', function() {
     let letzteRichtig = 0;
     let durchschnitt = 0;
     let rechnungen = [];
-    let gewaehlteReihen = new Array(11).fill(true);
-    gewaehlteReihen[10] = false;
+    let gewaehlteReihen = [false, false, true, true, true, true, true, true, true, true, false];
     let naechste = [];
     let anzahlNaechste = 3;
 
@@ -33,6 +32,8 @@ window.addEventListener('load', function() {
                 if (reihen.length == 11) {
                     reihen.forEach((e,i)=>gewaehlteReihen[i]= e);
                     gewaehlteReihen[10] = false;
+                    gewaehlteReihen[0] = false;
+                    gewaehlteReihen[1] = false;
                 }
             } catch (e) {
                 //console.log(e);
@@ -220,6 +221,10 @@ window.addEventListener('load', function() {
             e.addEventListener('click', function(e) {
                 let r = this.innerText;
                 gewaehlteReihen[r] = !gewaehlteReihen[r];
+                if (gewaehlteReihen.every(e=>!e)) {
+                    gewaehlteReihen[2] = true;
+                    document.querySelector("#reihen div").className = "on";
+                }
                 this.className = gewaehlteReihen[r] ? "on" : "off";
                 saveReihen();
             });
