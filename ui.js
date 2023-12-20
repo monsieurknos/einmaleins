@@ -91,11 +91,10 @@ window.addEventListener('load', function() {
 
     }
 
-    function klick(ev) {
+    function processKey(key) {
         if (startzeit==0) {
             startzeit = new Date();
         }
-        key = this.innerText;
         if (key=="⌫") {
             if (resultat.innerText.length>0) {
                 resultat.innerText = resultat.innerText.substring(0, resultat.innerText.length-1);
@@ -113,6 +112,25 @@ window.addEventListener('load', function() {
         }
     }
 
+    function klick(ev) {
+        processKey(this.innerText);
+    }
+
+    this.document.body.addEventListener('keyup', ev=>{
+        let key = ev.key;
+        if (key>='0' && key<='9') {
+            processKey(key);
+        }
+        if (key=="Enter") {
+            if (overlay.style.display != "none") {
+                overlay.style.display = "none";
+            } else {
+                processKey("⏎");
+            }
+        }
+        if (key=="Backspace") processKey("⌫");
+    });
+
     function init_keypad() {
         document.querySelectorAll("#keypad div").forEach((el)=>{
             el.addEventListener('click', klick);
@@ -123,6 +141,7 @@ window.addEventListener('load', function() {
         document.getElementById('clearstats').addEventListener('click', (ev)=>{
             clearStats();
         });
+        overlay.style.display = "none";
     }
 
     function initWebWorker() {
