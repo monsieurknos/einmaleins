@@ -15,10 +15,10 @@ body {
 }
 
 .aufgabe {
-    font-size: calc(var(--my-width) * 12);
+    font-size: calc(var(--my-width) * 14);
     font-family: sans-serif;
     font-weight: bold;
-    width:calc(var(--my-width)*75);
+    width:calc(var(--my-width)*70);
     padding-bottom: calc(var(--my-width) * 15);
     text-shadow: calc(var(--my-width) * 1) calc(var(--my-width) * 1) calc(var(--my-width) * 1.5) rgb(255, 255, 255);
 

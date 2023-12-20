@@ -169,7 +169,7 @@ window.addEventListener('load', function() {
             }
             return;
         }
-        if (resultat.innerText.length<3) {
+        if (resultat.innerText.length<2) {
             resultat.innerText += key
         }
     }
