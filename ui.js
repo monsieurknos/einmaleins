@@ -11,10 +11,19 @@ window.addEventListener('load', function() {
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
-    let startzeit = new Date();
+    let startzeit = 0;
+    let letzteRichtig = 0;
+    let durchschnitt = 0;
     let rechnungen = [];
     let naechste = [];
     let anzahlNaechste = 3;
+
+    function clearStats() {
+        korrekt = 0;
+        falsch = 0;
+        startzeit = 0;
+        statistik();
+    }
 
     function naechsteFuellen() {
         let indecies = new Array(rechnungen.length).fill(0).map((e,i)=>i);
@@ -32,8 +41,6 @@ window.addEventListener('load', function() {
     function neueRechnung() {
         naechste.shift();
         naechsteFuellen();
-        console.log("-------");
-        for (let n of naechste) console.log(rechnungen[n]);
         let neu = rechnungen[naechste[0]];
         let a = neu.a;
         let b = neu.b;
@@ -44,17 +51,31 @@ window.addEventListener('load', function() {
     }
 
     function statistik() {
-        let prozent = Math.floor(korrekt/(korrekt+falsch)*100+0.5);
-        let zeit = Math.round((new Date() - startzeit)/100/korrekt)/10;
+        let prozent = korrekt==0 ? 0 : Math.floor(korrekt/(korrekt+falsch)*100+0.5);
+        durchschnitt = korrekt==0 ? 0 : Math.round((new Date() - startzeit)/100/korrekt)/10;
         document.getElementById('prozent').innerText = prozent;
-        document.getElementById('sekunden').innerText = zeit;
+        document.getElementById('sekunden').innerText = durchschnitt;
         document.getElementById('anzahl').innerText = korrekt;
 
     }
 
     function pruefe() {
         if (resultat.innerText == geheim) {
-            rechnungen[naechste[0]].score+=1;
+            let addScore = 1;
+            if (korrekt>3) {
+                let dieseZeit = (new Date()-letzteRichtig)/1000;
+                if (dieseZeit > 3*durchschnitt) {
+                    addScore = -0.5;
+                }
+                else if (dieseZeit > 2*durchschnitt) {
+                    addScore=0.5;
+                }
+                if (dieseZeit<durchschnitt/2) {
+                    addScore = 2.5;
+                }
+            }
+            letzteRichtig = new Date();
+            rechnungen[naechste[0]].score+=addScore;
             korrekt+=1;
             statistik();
             neueRechnung();
@@ -63,7 +84,7 @@ window.addEventListener('load', function() {
                 naechste.push(naechste[0]);
             }
             rechnungen[naechste[0]].score-=3;
-            falsch += 1;
+            if (korrekt>0) falsch += 1;
             resultat.innerText = "";
             overlay.style.display = "flex";
         }
@@ -71,6 +92,9 @@ window.addEventListener('load', function() {
     }
 
     function klick(ev) {
+        if (startzeit==0) {
+            startzeit = new Date();
+        }
         key = this.innerText;
         if (key=="⌫") {
             if (resultat.innerText.length>0) {
@@ -96,7 +120,9 @@ window.addEventListener('load', function() {
         document.getElementById('weiter').addEventListener('click', (ev)=>{
             overlay.style.display = "none";
         });
-
+        document.getElementById('clearstats').addEventListener('click', (ev)=>{
+            clearStats();
+        });
     }
 
     function initWebWorker() {

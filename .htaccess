@@ -5,7 +5,7 @@
     Header set Expires 0
 </IfModule>
 
-<FilesMatch "\.(html|js)$">
+<FilesMatch "\.(html|js|json)$">
     <IfModule mod_expires.c>
         ExpiresActive Off
     </IfModule>

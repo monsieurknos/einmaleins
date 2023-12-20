@@ -1,15 +1,41 @@
 {
     "name": "Einmaleins",
     "short_name": "Einmaleins",
+    "id": "index.html?v6",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fdfdfd",
-    "theme_color": "#db4938",
+    "theme_color": "#4377c2",
     "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "icon512.png",
-        "type": "image/png", "sizes": "512x512"
+        "src": "icon.svg",
+        "type": "image/svg", "sizes": "any",
+        "purpose":"any"
+      },
+      {
+        "src": "icon144.png",
+        "type": "image/png", "sizes": "144x144"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "screenshotmobile.jpg",
+        "type": "image/jpg",
+        "sizes": "558x918",
+        "form_factor": "narrow"
+      },
+      {
+        "src": "screenshotmobile2.jpg",
+        "type": "image/jpg",
+        "sizes": "558x918",
+        "form_factor": "narrow"
+      },
+      {
+        "src": "screenshotwide.jpg",
+        "type": "image/jpg",
+        "sizes": "1896x933",
+        "form_factor": "wide"
       }
     ]
   }
