@@ -1,4 +1,4 @@
 all:
-	rsync -uvzr --exclude --delete ./.git ./ ivo.bloechliger@ofi:einmaleins/.
-	rsync -uvzr --exclude --delete ./.git ./ ivo@mx:/var/www/html/einmaleins/.
+	rsync -uvzr --exclude .git --exclude Makefile --delete ./ ivo.bloechliger@ofi:einmaleins/.
+	rsync -uvzr --exclude .git --exclude Makefile --delete ./ ivo@mx:/var/www/html/einmaleins/.
 
