@@ -14,8 +14,8 @@
         "purpose":"any"
       },
       {
-        "src": "icon144.png",
-        "type": "image/png", "sizes": "144x144"
+        "src": "icon512.png",
+        "type": "image/png", "sizes": "512x512"
       }
     ],
     "screenshots": [
