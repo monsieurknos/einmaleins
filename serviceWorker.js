@@ -1,4 +1,4 @@
-// Version 0.19
+// Version 0.20
 const einmaleins = "einmaleins"
 const assets = [
   "index.html",
