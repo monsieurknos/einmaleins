@@ -136,10 +136,12 @@ body {
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: calc(var(--my-width) * 5);
-    grid-row-gap: calc(var(--my-width) * 5);
+    grid-column-gap: calc(var(--my-width) * 3);
+    grid-row-gap: calc(var(--my-width) * 2);
     justify-content: center;
     align-items: center;
+    margin-top:calc(var(--my-width) * 5);
+    margin-bottom:calc(var(--my-width) * 5);
 }
 
 #reihen div {
@@ -159,7 +161,7 @@ body {
     justify-content: center;
     align-items: center;
     width:calc(var(--my-width) * 80);
-    height:calc(var(--my-width) * 40);
+    height:calc(var(--my-width) * 20);
     background-color: #fdd;
     border: 1vw solid #333;
     border-radius: calc(var(--my-width) * 12);    
@@ -186,4 +188,12 @@ body {
     right:calc(var(--my-width) * 2);
     top:calc(var(--my-width) * 2);
     font-size: calc(var(--my-width) * 12);
+}
+
+#hintergrund {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* font-size: calc(var(--my-width) * 6); */
 }

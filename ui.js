@@ -20,6 +20,14 @@ window.addEventListener('load', function() {
     let naechste = [];
     let anzahlNaechste = 3;
 
+
+    function loadBG() {
+        let dataurl = window.localStorage.getItem("einmaleinsbgimage");
+        if (dataurl) {
+            document.body.style.backgroundImage = "url("+dataurl+")";
+        }
+    }
+
     function saveReihen() {
         window.localStorage.setItem("einmaleinsreihen", JSON.stringify(gewaehlteReihen));
     }
@@ -229,7 +237,21 @@ window.addEventListener('load', function() {
                 saveReihen();
             });
         });
-
+        document.getElementById('uploadBgImage').addEventListener('change', function(ev) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    localStorage.setItem("einmaleinsbgimage", e.target.result);
+                    document.body.style.backgroundImage = "url("+e.target.result+")";
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        document.getElementById('resetbg').addEventListener('click', e=>{
+            localStorage.removeItem("einmaleinsbgimage");
+            document.body.style.backgroundImage = "url(bg.jpg)";
+        });
+        loadBG();
         overlay.style.display = "none";
         settings.style.display = "none";
     }
