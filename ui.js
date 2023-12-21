@@ -201,6 +201,45 @@ window.addEventListener('load', function() {
         if (key=="Backspace") processKey("⌫");
     });
 
+    // from https://stackoverflow.com/questions/23945494/use-html5-to-resize-an-image-before-upload
+    function bgUpload(ev) {
+        if (this.files && this.files[0]) {
+            let file = this.files[0];
+            if (file.type.match(/image.*/)) {
+                var reader = new FileReader();
+                reader.onload = function (readerEvent) {
+                    var image = new Image();
+                    image.onload = function (imageEvent) {
+                        // Resize the image
+                        var canvas = document.createElement('canvas'),
+                            max_size = 800,// TODO : pull max size from a site config
+                            width = image.width,
+                            height = image.height;
+                        if (width > height) {
+                            if (width > max_size) {
+                                height *= max_size / width;
+                                width = max_size;
+                            }
+                        } else {
+                            if (height > max_size) {
+                                width *= max_size / height;
+                                height = max_size;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+                        var dataUrl = canvas.toDataURL('image/jpeg');
+                        localStorage.setItem("einmaleinsbgimage", dataUrl);
+                        document.body.style.backgroundImage = "url("+dataUrl+")";
+                    }
+                    image.src = readerEvent.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
     function init_ui() {
         document.querySelectorAll("#keypad div").forEach((el)=>{
             el.addEventListener('click', klick);
@@ -237,16 +276,8 @@ window.addEventListener('load', function() {
                 saveReihen();
             });
         });
-        document.getElementById('uploadBgImage').addEventListener('change', function(ev) {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    localStorage.setItem("einmaleinsbgimage", e.target.result);
-                    document.body.style.backgroundImage = "url("+e.target.result+")";
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
+        document.getElementById('uploadBgImage').addEventListener('change', bgUpload);
+        
         document.getElementById('resetbg').addEventListener('click', e=>{
             localStorage.removeItem("einmaleinsbgimage");
             document.body.style.backgroundImage = "url(bg.jpg)";

@@ -1,4 +1,4 @@
-// Version 0.18
+// Version 0.19
 const einmaleins = "einmaleins"
 const assets = [
   "index.html",
@@ -74,7 +74,8 @@ self.addEventListener("install", installEvent => {
 self.addEventListener("fetch", fetchEvent => {
     fetchEvent.respondWith(
       caches.match(fetchEvent.request).then(res => {
-        return res || fetch(fetchEvent.request);
+        if (res) return res;
+        return fetch(fetchEvent.request);
       })
     )
 });
