@@ -4,6 +4,7 @@ window.addEventListener('load', function() {
     let richtig = document.getElementById('richtig');
     let overlay = document.getElementById('overlay');
     let settings = document.getElementById('settings');
+    let teilen = document.getElementById('teilen');
 
     function myRand() {
         return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
@@ -253,12 +254,18 @@ window.addEventListener('load', function() {
         document.getElementById('hamburger').addEventListener('click', ()=>{
             settings.style.display = "flex";
         });
+        document.getElementById('teilenbutton').addEventListener('click', ()=>{
+            teilen.style.display = "flex";
+        });
         document.getElementById('oksettings').addEventListener('click', ()=>{
             settings.style.display = "none";
             naechste = [];
             clearStats();
             resetScores();
             neueRechnung();
+        });
+        document.getElementById('okteilen').addEventListener('click', ()=>{
+            teilen.style.display = "none";
         });
         loadReihen();
         document.querySelectorAll("#reihen div").forEach(e=>{

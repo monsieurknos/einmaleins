@@ -1,38 +1,39 @@
 {
     "name": "Einmaleins",
     "short_name": "Einmaleins",
-    "id": "index.html?v6",
+    "id": "index.html?v7",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fdfdfd",
     "theme_color": "#4377c2",
     "orientation": "portrait-primary",
+    "description": "Einmaleins lernen",
     "icons": [
       {
-        "src": "icon.svg",
+        "src": "img/icon.svg",
         "type": "image/svg", "sizes": "any",
         "purpose":"any"
       },
       {
-        "src": "icon512.png",
+        "src": "img/icon512.png",
         "type": "image/png", "sizes": "512x512"
       }
     ],
     "screenshots": [
       {
-        "src": "screenshotmobile.jpg",
+        "src": "img/screenshotmobile.jpg",
         "type": "image/jpg",
         "sizes": "558x918",
         "form_factor": "narrow"
       },
       {
-        "src": "screenshotmobile2.jpg",
+        "src": "img/screenshotmobile2.jpg",
         "type": "image/jpg",
         "sizes": "558x918",
         "form_factor": "narrow"
       },
       {
-        "src": "screenshotwide.jpg",
+        "src": "img/screenshotwide.jpg",
         "type": "image/jpg",
         "sizes": "1896x933",
         "form_factor": "wide"

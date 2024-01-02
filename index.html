@@ -8,12 +8,13 @@
     <script src="ui.js"></script>
     <link rel="manifest" href="manifest.json" />
     <!-- ios support -->
-    <link rel="apple-touch-icon" href="icon512.png" />
+    <link rel="apple-touch-icon" href="img/icon512.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
     <meta name="theme-color" content="#db4938" />
 </head>
 <body>
     <div id="hamburger">☰</div>
+    <img id="teilenbutton" src="img/teilen.svg">
     <div id="status">
         <div>Anzahl</div><div><span id="anzahl">0</span></div><div id="clearstats">⟳</div>
         <div>Korrekt</div><div><span id="prozent">0</span> %</div>
@@ -60,6 +61,26 @@
             <span id="resetbg">⟳</span>
         </div>
         <div id="oksettings" class="weiter">OK</div>
+    </div>
+    <div id="teilen">
+        <img src="img/qrcode.svg">
+        <div id="copyurl">https://einmaleins.bloechligair.ch/</div>
+        <div id="social">
+            <a href="#" onclick="navigator.clipboard.writeText(copyurl.innerText);">
+                <img src="img/copy.svg">    
+            </a>
+            <a href="https://threema.id/compose?text=Einmaleins%20lernen%3A%20https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
+                <img src="img/threema-icon.svg">
+            </a>
+            <a href="whatsapp://send?text=Einmaleins%20lernen%3A%20https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
+                <img src="img/whatsapp.svg">
+            </a>
+            <!--  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
+                <img src="img/fb.png" FaceBook>
+            </a> -->
+
+        </div>
+        <div id="okteilen" class="weiter">Schliessen</div>
     </div>
 </body>
 </html>

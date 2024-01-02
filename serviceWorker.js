@@ -1,10 +1,10 @@
-// Version 0.20
+// Version 0.21
 const einmaleins = "einmaleins"
 const assets = [
   "index.html",
   "style.css",
   "ui.js",
-  "bg.jpg",
+  "img/bg.jpg",
 ]
 
 
