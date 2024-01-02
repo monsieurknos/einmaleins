@@ -39,17 +39,15 @@ window.addEventListener('load', function() {
             let path = `ogg/${file}.ogg`;
             let audio = new Audio(path);
             audios[file] = audio;
-            audio.addEventListener('ended', nextAudio);
+            //audio.addEventListener('ended', nextAudio);
         }
     }
 
     function nextAudio() {
         if (audioQueue.length>0) {
-            console.log(audioQueue);
             let a = audioQueue.shift();
-            console.log(audioQueue);
-            console.log(a);
             audios[a].play();
+            setTimeout(nextAudio, audios[a].duration*1000-20);
         }
     }
 
