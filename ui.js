@@ -5,10 +5,9 @@ window.addEventListener('load', function() {
     let overlay = document.getElementById('overlay');
     let settings = document.getElementById('settings');
     let teilen = document.getElementById('teilen');
-
-    function myRand() {
-        return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
-    }
+    let audioswitch = document.getElementById('audioswitch');
+    let audioSymbols = ['🔇', '🔊'];
+    let audioEnabled = 0;
 
     let geheim = 0;
     let korrekt = 0;
@@ -20,13 +19,54 @@ window.addEventListener('load', function() {
     let gewaehlteReihen = [false, false, true, true, true, true, true, true, true, true, false];
     let naechste = [];
     let anzahlNaechste = 3;
+    let audios = {};
+    let audioQueue = [];
 
+    function myRand() {
+        return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
+    }
 
     function loadBG() {
         let dataurl = window.localStorage.getItem("einmaleinsbgimage");
         if (dataurl) {
             document.body.style.backgroundImage = "url("+dataurl+")";
         }
+    }
+
+    function loadAudio() {
+        let files = [2,3,4,5,6,7,8,9,10,'mal'];
+        for (let file of files) {
+            let path = `ogg/${file}.ogg`;
+            let audio = new Audio(path);
+            audios[file] = audio;
+            audio.addEventListener('ended', nextAudio);
+        }
+    }
+
+    function nextAudio() {
+        if (audioQueue.length>0) {
+            console.log(audioQueue);
+            let a = audioQueue.shift();
+            console.log(audioQueue);
+            console.log(a);
+            audios[a].play();
+        }
+    }
+
+
+    function stopAudio() {
+        audioQueue = [];
+        for (let file in audios) {
+            audios[file].pause();
+            audios[file].currentTime = 0;
+        }
+    }
+
+    function sayRechung() {
+        stopAudio();
+        r = rechnungen[naechste[0]];
+        audioQueue = [r.a, "mal", r.b];
+        nextAudio();
     }
 
     function saveReihen() {
@@ -113,6 +153,9 @@ window.addEventListener('load', function() {
         rechnung.innerText = `${a} · ${b}`
         resultat.innerText = "";
         richtig.innerText = rechnung.innerText + " = " + geheim;
+        if (audioEnabled==1) {
+            sayRechung();
+        }
     }
 
     function statistik() {
@@ -267,6 +310,15 @@ window.addEventListener('load', function() {
         document.getElementById('okteilen').addEventListener('click', ()=>{
             teilen.style.display = "none";
         });
+        document.getElementById('audioswitch').addEventListener('click', ()=>{
+            audioEnabled = 1 - audioEnabled;
+            audioswitch.innerText = audioSymbols[audioEnabled];
+            if (audioEnabled==1) {
+                sayRechung();
+            } else {
+                stopAudio();
+            }
+        });
         loadReihen();
         document.querySelectorAll("#reihen div").forEach(e=>{
             console.log(e);
@@ -316,6 +368,7 @@ window.addEventListener('load', function() {
     }
     initWebWorker();
     init_ui();
+    loadAudio();
     initRechnungen();
     neueRechnung();
 

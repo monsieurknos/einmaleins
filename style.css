@@ -9,7 +9,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url(bg.jpg);
+    background-image: url(img/bg.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -18,7 +18,7 @@ body {
     font-size: calc(var(--my-width) * 14);
     font-family: sans-serif;
     font-weight: bold;
-    width:calc(var(--my-width)*70);
+    width:calc(var(--my-width)*95);
     padding-bottom: calc(var(--my-width) * 15);
     text-shadow: calc(var(--my-width) * 1) calc(var(--my-width) * 1) calc(var(--my-width) * 1.5) rgb(255, 255, 255);
 

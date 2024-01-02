@@ -5,6 +5,21 @@ const assets = [
   "style.css",
   "ui.js",
   "img/bg.jpg",
+  "img/copy.svg",
+  "img/qrcode.svg",
+  "img/teilen.svg",
+  "img/threema-icon.svg",
+  "img/whatsapp.svg",
+  "ogg/2.ogg",
+  "ogg/3.ogg",
+  "ogg/4.ogg",
+  "ogg/5.ogg",
+  "ogg/6.ogg",
+  "ogg/7.ogg",
+  "ogg/8.ogg",
+  "ogg/9.ogg",
+  "ogg/10.ogg",
+  "ogg/mal.ogg",
 ]
 
 
