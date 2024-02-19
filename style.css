@@ -137,14 +137,14 @@ body {
 
 #reihen {
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     grid-column-gap: calc(var(--my-width) * 3);
     grid-row-gap: calc(var(--my-width) * 2);
     justify-content: center;
     align-items: center;
-    margin-top:calc(var(--my-width) * 5);
-    margin-bottom:calc(var(--my-width) * 5);
+    margin-top:calc(var(--my-width) * 3);
+    margin-bottom:calc(var(--my-width) * 3);
 }
 
 #reihen div {
@@ -159,6 +159,12 @@ body {
     box-shadow: calc(var(--my-width) * 1) calc(var(--my-width) * 1) calc(var(--my-width) * 1.5) #004;
 }
 
+#einmaleinsinfos {
+    font-size: calc(var(--my-width)* 3);
+    font-weight: normal;
+    width:calc(var(--my-width)*75);
+    text-align:justify;
+}
 .weiter {
     display: flex;
     justify-content: center;
@@ -202,11 +208,22 @@ body {
     width: calc(var(--my-width) * 8);
 }
 
+#installbutton {
+    position:absolute;
+    height:calc(var(--my-width) * 18);
+    width: calc(var(--my-width) * 12);
+    left:calc(var(--my-width)*44);
+    top:calc(var(--my-width) * 3);
+    display:none;
+}
+
+
 #hintergrund {
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: calc(var(--my-width)*4);
     /* font-size: calc(var(--my-width) * 6); */
 }
 

@@ -14,7 +14,9 @@
 </head>
 <body>
     <div id="hamburger">☰</div>
+    <img id="installbutton" src="img/install.svg">
     <img id="teilenbutton" src="img/teilen.svg">
+
     <div id="status">
         <div>Anzahl</div><div><span id="anzahl">0</span></div><div id="clearstats">⟳</div>
         <div>Korrekt</div><div><span id="prozent">0</span> %</div>
@@ -56,9 +58,14 @@
             <div class="off">9</div>
         </form>
         <div id="hintergrund">
-            <label for="uploadBgImage">Hintergrund</label>
+            <label for="uploadBgImage">Hintergrund <span id="resetbg">⟳</span></label>
             <input type='file' id="uploadBgImage" accept="image/png, image/jpeg, image/jpg"/>
-            <span id="resetbg">⟳</span>
+        </div>
+        Infos
+        <div id="einmaleinsinfos">
+        Die Webseite ist für alle frei und uneingeschränkt nutzbar. Wird die Seite auf dem Gerät installiert, ist sie auch ohne Internet-Verbindung nutzbar.
+        Persönliche Daten werden keine auf dem Server gespeichert, alle Daten liegen nur lokal auf dem jeweiligen Gerät vor.
+        Programmiert wurde die Seite von <a href="https://threema.id/HX3WS583?text=">Ivo Blöchliger</a> für seine Tochter.
         </div>
         <div id="oksettings" class="weiter">OK</div>
     </div>

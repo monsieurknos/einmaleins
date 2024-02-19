@@ -5,6 +5,7 @@ window.addEventListener('load', function() {
     let overlay = document.getElementById('overlay');
     let settings = document.getElementById('settings');
     let teilen = document.getElementById('teilen');
+    let installbutton = document.getElementById('installbutton')
     let audioswitch = document.getElementById('audioswitch');
     let audioSymbols = ['🔇', '🔊'];
     let audioEnabled = 0;
@@ -21,6 +22,36 @@ window.addEventListener('load', function() {
     let anzahlNaechste = 3;
     let audios = {};
     let audioQueue = [];
+
+    let installPrompt = null;
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        console.log("show installbutton")
+        installbutton.style.display = "block";
+    });
+    
+    installbutton.addEventListener("click", async () => {
+        console.log("installbutton click")
+        if (!installPrompt) {
+          return;
+        }
+        console.log("Installation starting")
+        const result = await installPrompt.prompt();
+        console.log(`Install prompt was: ${result.outcome}`);
+        disableInAppInstallPrompt();
+    });
+
+    window.addEventListener("appinstalled", () => {
+        console.log("installed");
+        disableInAppInstallPrompt();
+    }); 
+
+    function disableInAppInstallPrompt() {
+        console.log("hiding")
+        installPrompt = null;
+        installbutton.setAttribute("hidden", "");
+    }
 
     function myRand() {
         return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);

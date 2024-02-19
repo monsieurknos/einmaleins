@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.24696mm"
+   height="18.62821mm"
+   viewBox="0 0 16.246959 18.628209"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="install.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="4.1373683"
+     inkscape:cx="8.4594838"
+     inkscape:cy="66.225673"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid876"
+       originx="0.18597961"
+       originy="1.2443126" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <filter
+       y="-0.096659598"
+       height="1.1933192"
+       inkscape:menu-tooltip="Darkens the edge with an inner blur and adds a flexible glow"
+       inkscape:menu="Shadows and Glows"
+       inkscape:label="Dark and Glow"
+       style="color-interpolation-filters:sRGB"
+       id="filter1889"
+       x="-0.11405833"
+       width="1.2281167">
+      <feGaussianBlur
+         stdDeviation="0.34433188148961663"
+         result="result6"
+         id="feGaussianBlur1879" />
+      <feComposite
+         result="result8"
+         in="SourceGraphic"
+         operator="atop"
+         in2="result6"
+         id="feComposite1881" />
+      <feComposite
+         result="result9"
+         operator="over"
+         in2="SourceAlpha"
+         in="result8"
+         id="feComposite1883" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         result="result10"
+         id="feColorMatrix1885" />
+      <feBlend
+         in="result10"
+         mode="normal"
+         in2="result6"
+         id="feBlend1887" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-41.772699,-37.724367)">
+    <path
+       id="path1180"
+       style="fill:none;stroke:#ffc000;stroke-width:1.365;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter1889)"
+       d="M 49.896179,52.197847 V 44.52493 m -2.645833,5.027084 2.645833,2.645833 2.645833,-2.645833 M 45.927429,46.90618 h -2.645833 v 7.9375 h 13.229166 v -7.9375 h -2.645833 m -3.96875,-5.027083 v 0.79375 m 0,-3.439583 v 0.79375"
+       sodipodi:nodetypes="ccccccccccccccc" />
+    <path
+       id="path3349"
+       style="fill:none;stroke:#008401;stroke-width:1.365;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 49.896179,52.197847 V 44.52493 m -2.645833,5.027084 2.645833,2.645833 2.645833,-2.645833 M 45.927429,46.90618 h -2.645833 v 7.9375 h 13.229166 v -7.9375 h -2.645833 m -3.96875,-5.027083 v 0.79375 m 0,-3.439583 v 0.79375"
+       sodipodi:nodetypes="ccccccccccccccc" />
+  </g>
+</svg>
