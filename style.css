@@ -227,6 +227,10 @@ body {
     /* font-size: calc(var(--my-width) * 6); */
 }
 
+#hintergrund label, #hintergrund span {
+    display:contents;
+}
+
 #teilen {
     position:absolute;
     background-image:linear-gradient(150deg,  #fff 0%, #aaf 50%, #88f 73%);
