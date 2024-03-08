@@ -25,7 +25,7 @@ const assets = [
 
 async function populateCache() {
   self.upToDate = false;
-  try {      
+  try {
     const cache = await caches.open(einmaleins);
     const total = assets.length;
     let installed = 0;
@@ -71,7 +71,7 @@ self.addEventListener('activate', (event) => {
     const cacheNames = await caches.keys();
     await Promise.all(cacheNames.map(async (cacheName) => {
       if (einmaleins !== cacheName) {
-        console.log("Cleared cacheName "+cacheName);
+        console.log("Cleared cacheName " + cacheName);
         await caches.delete(cacheName);
       }
     }));
@@ -87,10 +87,10 @@ self.addEventListener("install", installEvent => {
 });
 
 self.addEventListener("fetch", fetchEvent => {
-    fetchEvent.respondWith(
-      caches.match(fetchEvent.request).then(res => {
-        if (res) return res;
-        return fetch(fetchEvent.request);
-      })
-    )
+  fetchEvent.respondWith(
+    caches.match(fetchEvent.request).then(res => {
+      if (res) return res;
+      return fetch(fetchEvent.request);
+    })
+  )
 });

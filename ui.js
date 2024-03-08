@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     let resultat = document.getElementById('resultat');
     let rechnung = document.getElementById('rechnung');
     let richtig = document.getElementById('richtig');
@@ -9,15 +9,30 @@ window.addEventListener('load', function() {
     let audioswitch = document.getElementById('audioswitch');
     let audioSymbols = ['🔇', '🔊'];
     let audioEnabled = 0;
+    let confcount = 75;
+
+    let confetti = new Confetti('rain');
+    confetti.setCount(75);
+    confetti.setSize(2);
+    //confetti.setGravity(20);
+    confetti.setPower(30);
+    confetti.setFade(false);
+    confetti.destroyTarget(true);
+
+
+    const cheers = new Audio("ogg/cheers.ogg");
+    const baam = new Audio("ogg/baam.ogg");
 
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
+    let stroke = 0;
+    const strokelength = 2;
     let startzeit = 0;
     let letzteRichtig = 0;
     let durchschnitt = 0;
     let rechnungen = [];
-    let gewaehlteReihen = [false, false, true, true, true, true, true, true, true, true, false];
+    let gewaehlteReihen = [true, true, true, false, false, true, true, true, true, true, true, true, true, false];
     let naechste = [];
     let anzahlNaechste = 3;
     let audios = {};
@@ -30,11 +45,11 @@ window.addEventListener('load', function() {
         console.log("show installbutton")
         installbutton.style.display = "block";
     });
-    
+
     installbutton.addEventListener("click", async () => {
         console.log("installbutton click")
         if (!installPrompt) {
-          return;
+            return;
         }
         console.log("Installation starting")
         const result = await installPrompt.prompt();
@@ -45,7 +60,7 @@ window.addEventListener('load', function() {
     window.addEventListener("appinstalled", () => {
         console.log("installed");
         disableInAppInstallPrompt();
-    }); 
+    });
 
     function disableInAppInstallPrompt() {
         console.log("hiding")
@@ -54,18 +69,18 @@ window.addEventListener('load', function() {
     }
 
     function myRand() {
-        return Math.floor(Math.pow(Math.random(), 0.8)*8.3+2);
+        return Math.floor(Math.pow(Math.random(), 0.8) * 8.3 + 2);
     }
 
     function loadBG() {
         let dataurl = window.localStorage.getItem("einmaleinsbgimage");
         if (dataurl) {
-            document.body.style.backgroundImage = "url("+dataurl+")";
+            document.body.style.backgroundImage = "url(" + dataurl + ")";
         }
     }
 
     function loadAudio() {
-        let files = [2,3,4,5,6,7,8,9,10,'mal'];
+        let files = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'mal'];
         for (let file of files) {
             let path = `ogg/${file}.ogg`;
             let audio = new Audio(path);
@@ -75,10 +90,10 @@ window.addEventListener('load', function() {
     }
 
     function nextAudio() {
-        if (audioQueue.length>0) {
+        if (audioQueue.length > 0) {
             let a = audioQueue.shift();
             audios[a].play();
-            setTimeout(nextAudio, audios[a].duration*1000-20);
+            setTimeout(nextAudio, audios[a].duration * 1000 - 20);
         }
     }
 
@@ -99,6 +114,7 @@ window.addEventListener('load', function() {
     }
 
     function saveReihen() {
+        //console.log(gewaehlteReihen);
         window.localStorage.setItem("einmaleinsreihen", JSON.stringify(gewaehlteReihen));
     }
 
@@ -107,8 +123,10 @@ window.addEventListener('load', function() {
         if (json) {
             try {
                 let reihen = JSON.parse(json);
-                if (reihen.length == 11) {
-                    reihen.forEach((e,i)=>gewaehlteReihen[i]= e);
+                //console.log(reihen)
+                //alert("rieh");
+                if (reihen.length == 14) {
+                    reihen.forEach((e, i) => gewaehlteReihen[i] = e);
                     gewaehlteReihen[10] = false;
                     gewaehlteReihen[0] = false;
                     gewaehlteReihen[1] = false;
@@ -120,7 +138,7 @@ window.addEventListener('load', function() {
     }
 
     function saveScores() {
-        let scores = rechnungen.map(e=>e.score);
+        let scores = rechnungen.map(e => e.score);
         window.localStorage.setItem("einmaleinsscores", JSON.stringify(scores));
         //console.log("scores saved");
     }
@@ -131,7 +149,7 @@ window.addEventListener('load', function() {
             try {
                 let scores = JSON.parse(json);
                 if (scores.length == rechnungen.length) {
-                    scores.forEach((e,i)=>rechnungen[i].score = e);
+                    scores.forEach((e, i) => rechnungen[i].score = e);
                     //console.log("scores loaded");
                 } else {
                     //console.log("scores with wrong length");
@@ -159,12 +177,13 @@ window.addEventListener('load', function() {
     }
 
     function naechsteFuellen() {
-        let indecies = new Array(rechnungen.length).fill(0).map((e,i)=>i);
-        indecies.sort((a,b)=>rechnungen[a].score-rechnungen[b].score+Math.random()-0.5);
+        let indecies = new Array(rechnungen.length).fill(0).map((e, i) => i);
+        indecies.sort((a, b) => rechnungen[a].score - rechnungen[b].score + Math.random() - 0.5);
         let i = 0;
-        while (naechste.length<anzahlNaechste) {
+        while (naechste.length < anzahlNaechste) {
             let j = indecies[i];
             let r = rechnungen[j];
+            console.log(naechste);
             if ((!naechste.includes(j)) && (gewaehlteReihen[r.a] || gewaehlteReihen[r.b])) {
                 naechste.push(j);
             }
@@ -178,18 +197,18 @@ window.addEventListener('load', function() {
         let neu = rechnungen[naechste[0]];
         let a = neu.a;
         let b = neu.b;
-        geheim = a*b;
+        geheim = a * b;
         rechnung.innerText = `${a} · ${b}`
         resultat.innerText = "";
         richtig.innerText = rechnung.innerText + " = " + geheim;
-        if (audioEnabled==1) {
+        if (audioEnabled == 1) {
             sayRechung();
         }
     }
 
     function statistik() {
-        let prozent = korrekt==0 ? 0 : Math.floor(korrekt/(korrekt+falsch)*100+0.5);
-        durchschnitt = korrekt==0 ? 0 : Math.round((new Date() - startzeit)/100/korrekt)/10;
+        let prozent = korrekt == 0 ? 0 : Math.floor(korrekt / (korrekt + falsch) * 100 + 0.5);
+        durchschnitt = korrekt == 0 ? 0 : Math.round((new Date() - startzeit) / 100 / korrekt) / 10;
         document.getElementById('prozent').innerText = prozent;
         document.getElementById('sekunden').innerText = durchschnitt;
         document.getElementById('anzahl').innerText = korrekt;
@@ -198,35 +217,51 @@ window.addEventListener('load', function() {
 
     function pruefe() {
         if (resultat.innerText == geheim) {
+            stroke += 1;
+            if (audioEnabled == 1) {
+                baam.play();
+            }
+            console.log(stroke);
+            if (stroke == strokelength) {
+                confcount += 500;
+                alert("Juhui");
+                cheers.play()
+
+                stroke = 0;
+                confetti.setCount(confcount);
+                document.getElementById("rain").click();
+            }
             let addScore = 1;
-            if (korrekt>3) {
-                let dieseZeit = (new Date()-letzteRichtig)/1000;
-                if (dieseZeit > 3*durchschnitt) {
+            if (korrekt > 3) {
+                let dieseZeit = (new Date() - letzteRichtig) / 1000;
+                if (dieseZeit > 3 * durchschnitt) {
                     addScore = -0.5;
                 }
-                else if (dieseZeit > 2*durchschnitt) {
-                    addScore=0.5;
+                else if (dieseZeit > 2 * durchschnitt) {
+                    addScore = 0.5;
                 }
-                if (dieseZeit<durchschnitt/2) {
+                if (dieseZeit < durchschnitt / 2) {
                     addScore = 2.5;
                 }
             }
             letzteRichtig = new Date();
-            rechnungen[naechste[0]].score+=addScore;
-            if (rechnungen[naechste[0]].score>5) {
+            rechnungen[naechste[0]].score += addScore;
+            if (rechnungen[naechste[0]].score > 5) {
                 rechnungen[naechste[0]].score = 5;
             }
-            korrekt+=1;
+            korrekt += 1;
             statistik();
             neueRechnung();
         } else {
-            if (naechste[naechste.length-1]!=naechste[0]) {
+            stroke = 0;
+            confcount = 500;
+            if (naechste[naechste.length - 1] != naechste[0]) {
                 naechste.push(naechste[0]);
-                rechnungen[naechste[0]].score-=3;
-                if (rechnungen[naechste[0]].score<-5) {
+                rechnungen[naechste[0]].score -= 3;
+                if (rechnungen[naechste[0]].score < -5) {
                     rechnungen[naechste[0]].score = -5;
                 }
-                if (korrekt>0) falsch += 1;
+                if (korrekt > 0) falsch += 1;
             }
             resultat.innerText = "";
             overlay.style.display = "flex";
@@ -235,22 +270,22 @@ window.addEventListener('load', function() {
     }
 
     function processKey(key) {
-        if (startzeit==0) {
+        if (startzeit == 0) {
             startzeit = new Date();
         }
-        if (key=="⌫") {
-            if (resultat.innerText.length>0) {
-                resultat.innerText = resultat.innerText.substring(0, resultat.innerText.length-1);
+        if (key == "⌫") {
+            if (resultat.innerText.length > 0) {
+                resultat.innerText = resultat.innerText.substring(0, resultat.innerText.length - 1);
             }
             return;
         }
-        if (key=="⏎") {
-            if (resultat.innerText.length>0) {
+        if (key == "⏎") {
+            if (resultat.innerText.length > 0) {
                 pruefe();
             }
             return;
         }
-        if (resultat.innerText.length<2) {
+        if (resultat.innerText.length < 2) {
             resultat.innerText += key
         }
     }
@@ -259,19 +294,19 @@ window.addEventListener('load', function() {
         processKey(this.innerText);
     }
 
-    this.document.body.addEventListener('keyup', ev=>{
+    this.document.body.addEventListener('keyup', ev => {
         let key = ev.key;
-        if (key>='0' && key<='9') {
+        if (key >= '0' && key <= '9') {
             processKey(key);
         }
-        if (key=="Enter") {
+        if (key == "Enter") {
             if (overlay.style.display != "none") {
                 overlay.style.display = "none";
             } else {
                 processKey("⏎");
             }
         }
-        if (key=="Backspace") processKey("⌫");
+        if (key == "Backspace") processKey("⌫");
     });
 
     // from https://stackoverflow.com/questions/23945494/use-html5-to-resize-an-image-before-upload
@@ -304,7 +339,7 @@ window.addEventListener('load', function() {
                         canvas.getContext('2d').drawImage(image, 0, 0, width, height);
                         var dataUrl = canvas.toDataURL('image/jpeg');
                         localStorage.setItem("einmaleinsbgimage", dataUrl);
-                        document.body.style.backgroundImage = "url("+dataUrl+")";
+                        document.body.style.backgroundImage = "url(" + dataUrl + ")";
                     }
                     image.src = readerEvent.target.result;
                 }
@@ -314,49 +349,50 @@ window.addEventListener('load', function() {
     }
 
     function init_ui() {
-        document.querySelectorAll("#keypad div").forEach((el)=>{
+        document.querySelectorAll("#keypad div").forEach((el) => {
             el.addEventListener('click', klick);
         });
-        document.getElementById('weiter').addEventListener('click', (ev)=>{
+        document.getElementById('weiter').addEventListener('click', (ev) => {
             overlay.style.display = "none";
         });
-        document.getElementById('clearstats').addEventListener('click', (ev)=>{
+        document.getElementById('clearstats').addEventListener('click', (ev) => {
             clearStats();
         });
-        document.getElementById('hamburger').addEventListener('click', ()=>{
+        document.getElementById('hamburger').addEventListener('click', () => {
             settings.style.display = "flex";
         });
-        document.getElementById('teilenbutton').addEventListener('click', ()=>{
+        document.getElementById('teilenbutton').addEventListener('click', () => {
             teilen.style.display = "flex";
         });
-        document.getElementById('oksettings').addEventListener('click', ()=>{
+        document.getElementById('oksettings').addEventListener('click', () => {
             settings.style.display = "none";
             naechste = [];
             clearStats();
             resetScores();
             neueRechnung();
         });
-        document.getElementById('okteilen').addEventListener('click', ()=>{
+        document.getElementById('okteilen').addEventListener('click', () => {
             teilen.style.display = "none";
         });
-        document.getElementById('audioswitch').addEventListener('click', ()=>{
+        document.getElementById('audioswitch').addEventListener('click', () => {
             audioEnabled = 1 - audioEnabled;
             audioswitch.innerText = audioSymbols[audioEnabled];
-            if (audioEnabled==1) {
+            if (audioEnabled == 1) {
                 sayRechung();
             } else {
                 stopAudio();
             }
         });
         loadReihen();
-        document.querySelectorAll("#reihen div").forEach(e=>{
-            console.log(e);
+        document.querySelectorAll("#reihen div").forEach(e => {
+            //alert(e.innerHTML);
+            //console.log(e);
             let r = e.innerText;
             e.className = gewaehlteReihen[r] ? "on" : "off";
-            e.addEventListener('click', function(e) {
+            e.addEventListener('click', function (e) {
                 let r = this.innerText;
                 gewaehlteReihen[r] = !gewaehlteReihen[r];
-                if (gewaehlteReihen.every(e=>!e)) {
+                if (gewaehlteReihen.every(e => !e)) {
                     gewaehlteReihen[2] = true;
                     document.querySelector("#reihen div").className = "on";
                 }
@@ -365,8 +401,8 @@ window.addEventListener('load', function() {
             });
         });
         document.getElementById('uploadBgImage').addEventListener('change', bgUpload);
-        
-        document.getElementById('resetbg').addEventListener('click', e=>{
+
+        document.getElementById('resetbg').addEventListener('click', e => {
             localStorage.removeItem("einmaleinsbgimage");
             document.body.style.backgroundImage = "url(bg.jpg)";
         });
@@ -378,18 +414,18 @@ window.addEventListener('load', function() {
     function initWebWorker() {
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker
-            .register("./serviceWorker.js")
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))
+                .register("./serviceWorker.js")
+                .then(res => console.log("service worker registered"))
+                .catch(err => console.log("service worker not registered", err))
         } else {
             console.log("no serviceWorker in navigator");
         }
     }
 
     function initRechnungen() {
-        for (let a=2; a<=10; a++) {
-            for (let b=2; b<=10; b++) {
-                rechnungen.push({"a":a, "b":b, "score":0})
+        for (let a = 2; a <= 10; a++) {
+            for (let b = 2; b <= 10; b++) {
+                rechnungen.push({ "a": a, "b": b, "score": 0 })
             }
         }
         loadScores();
