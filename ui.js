@@ -538,9 +538,16 @@ window.addEventListener('load', function () {
     function initRechnungen() {
         for (let a = 2; a <= ((mode == "mal") ? 10 : 20); a++) {
             for (let b = 2; b <= ((mode == "mal") ? 10 : a); b++) {
-                rechnungen.push({ "a": a, "b": b, "score": 0 });
+                if(mode == "plus"){
+                    rechnungen.push({ "a": a-b, "b": b, "score": 0 });
+                }else{
+                    rechnungen.push({ "a": a, "b": b, "score": 0 });
+                }
             }
         }
+        console.log("Doin fine...");
+        console.log(rechnungen.map(e => e.a+e.b));
+
         loadScores();
         naechsteFuellen();
     }
