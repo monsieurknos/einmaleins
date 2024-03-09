@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +14,25 @@
     <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
     <meta name="theme-color" content="#db4938" />
 </head>
+
 <body>
-    <div style="align:center"><button id="rain" style="visibility:hidden;">test</button></div>
+    <div><button id="rain" style="visibility:hidden;">test</button></div>
     <div id="hamburger">☰</div>
     <img id="installbutton" src="img/install.svg">
     <img id="teilenbutton" src="img/teilen.svg">
 
     <div id="status">
-        <div>Anzahl</div><div><span id="anzahl">0</span></div><div id="clearstats">⟳</div>
-        <div>Korrekt</div><div><span id="prozent">0</span> %</div>
-        <div>Zeit</div><div><span id="sekunden">0</span> s</div>
+        <div>Anzahl</div>
+        <div><span id="anzahl">0</span></div>
+        <div id="clearstats">⟳</div>
+        <div>Korrekt</div>
+        <div><span id="prozent">0</span> %</div>
+        <div>Zeit</div>
+        <div><span id="sekunden">0</span> s</div>
     </div>
     <div class="aufgabe">
-        <span id="audioswitch">🔇</span> <span id="rechnung">3 · 7</span> = <span id="resultat">2</span>
+        <span id="audioswitch" class="switch">🔇</span><span id="entertainswitch" class="switch">🔕</span> <span
+            id="rechnung">3 · 7</span> = <span id="resultat">21</span>
     </div>
     <div id="keypad">
         <div class="key">7</div>
@@ -58,19 +65,24 @@
             <div class="off">7</div>
             <div class="on">8</div>
             <div class="off">9</div>
+            <!--
             <div class="off">11</div>
             <div class="off">12</div>
             <div class="off">13</div>
+            -->
         </form>
         <div id="hintergrund">
             <label for="uploadBgImage">Hintergrund</label><span id="resetbg"> ⟳</span>
-            <input type='file' id="uploadBgImage" accept="image/png, image/jpeg, image/jpg"/>
+            <input type='file' id="uploadBgImage" accept="image/png, image/jpeg, image/jpg" />
         </div>
         Infos
         <div id="einmaleinsinfos">
-        Die Webseite ist für alle frei und uneingeschränkt nutzbar. Wird die Seite auf dem Gerät installiert, ist sie auch ohne Internet-Verbindung nutzbar.
-        Persönliche Daten werden keine auf dem Server gespeichert, alle Daten liegen nur lokal auf dem jeweiligen Gerät vor.
-        Programmiert wurde die Seite von <a href="https://threema.id/HX3WS583?text=">Ivo Blöchliger</a> für seine Tochter.
+            Die Webseite ist für alle frei und uneingeschränkt nutzbar. Wird die Seite auf dem Gerät installiert, ist
+            sie auch ohne Internet-Verbindung nutzbar.
+            Persönliche Daten werden keine auf dem Server gespeichert, alle Daten liegen nur lokal auf dem jeweiligen
+            Gerät vor.
+            Programmiert wurde die Seite von <a href="https://threema.id/HX3WS583?text=">Ivo Blöchliger</a> für seine
+            Tochter.
         </div>
         <div id="oksettings" class="weiter">OK</div>
     </div>
@@ -79,9 +91,10 @@
         <div id="copyurl">https://einmaleins.bloechligair.ch/</div>
         <div id="social">
             <a href="#" onclick="navigator.clipboard.writeText(copyurl.innerText);">
-                <img src="img/copy.svg">    
+                <img src="img/copy.svg">
             </a>
-            <a href="https://threema.id/compose?text=Einmaleins%20lernen%3A%20https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
+            <a
+                href="https://threema.id/compose?text=Einmaleins%20lernen%3A%20https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
                 <img src="img/threema-icon.svg">
             </a>
             <a href="whatsapp://send?text=Einmaleins%20lernen%3A%20https%3A%2F%2Feinmaleins.bloechligair.ch%2F">
@@ -95,4 +108,5 @@
         <div id="okteilen" class="weiter">Schliessen</div>
     </div>
 </body>
+
 </html>

@@ -7,15 +7,19 @@ window.addEventListener('load', function () {
     let teilen = document.getElementById('teilen');
     let installbutton = document.getElementById('installbutton')
     let audioswitch = document.getElementById('audioswitch');
+    let entertainswitch = document.getElementById('entertainswitch');
     let audioSymbols = ['🔇', '🔊'];
     let audioEnabled = 0;
+    let entertainSymbols = ['🔕', '🔔'];
+    let entertainEnabled = 0;
+
     let confcount = 75;
 
     let confetti = new Confetti('rain');
     confetti.setCount(75);
-    confetti.setSize(2);
-    //confetti.setGravity(20);
-    confetti.setPower(30);
+    confetti.setSize(4);
+    confetti.setGravity(100);
+    confetti.setPower(50);
     confetti.setFade(false);
     confetti.destroyTarget(true);
 
@@ -26,9 +30,12 @@ window.addEventListener('load', function () {
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
+
     let streak = 0;
-    const streaklength = 10;
+    const streaklength = 5;
+    const avthreshold = 4.5;
     let startzeit = 0;
+
     let letzteRichtig = 0;
     let durchschnitt = 0;
     let rechnungen = [];
@@ -67,9 +74,27 @@ window.addEventListener('load', function () {
         installPrompt = null;
         installbutton.setAttribute("hidden", "");
     }
+    // stolen from https://stackoverflow.com/questions/43566019/how-to-choose-a-weighted-random-array-element-in-javascript
+    function weighted_random(items, weights) {
+        var i;
+
+        for (i = 1; i < weights.length; i++)
+            weights[i] += weights[i - 1];
+
+        var random = Math.random() * weights[weights.length - 1];
+
+        for (i = 0; i < weights.length; i++)
+            if (weights[i] > random)
+                break;
+
+        return items[i];
+    }
+
 
     function myRand() {
-        return Math.floor(Math.pow(Math.random(), 0.8) * 8.3 + 2);
+        rnd = weighted_random([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], [.15, .15, .2, .2, .3, .2, .2, .2, .1, .2, .2, .2]);
+        //console.log(rnd);
+        return (rnd);
     }
 
     function loadBG() {
@@ -123,8 +148,6 @@ window.addEventListener('load', function () {
         if (json) {
             try {
                 let reihen = JSON.parse(json);
-                //console.log(reihen)
-                //alert("rieh");
                 if (reihen.length == 14) {
                     reihen.forEach((e, i) => gewaehlteReihen[i] = e);
                     gewaehlteReihen[10] = false;
@@ -141,6 +164,19 @@ window.addEventListener('load', function () {
         let scores = rechnungen.map(e => e.score);
         window.localStorage.setItem("einmaleinsscores", JSON.stringify(scores));
         //console.log("scores saved");
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function shake() {
+        document.getElementById('keypad').style.animationPlayState = "running";
+        document.getElementById('keypad').style.animation = "shake 0.2s";
+        document.getElementById('keypad').style.animationIterationCount = "infinite";
+        await sleep(1000);
+        document.getElementById('keypad').style.animationPlayState = "paused";
+
     }
 
     function loadScores() {
@@ -177,13 +213,13 @@ window.addEventListener('load', function () {
     }
 
     function naechsteFuellen() {
-        let indecies = new Array(rechnungen.length).fill(0).map((e, i) => i);
-        indecies.sort((a, b) => rechnungen[a].score - rechnungen[b].score + Math.random() - 0.5);
+        let indices = new Array(rechnungen.length).fill(0).map((e, i) => i);
+        indices.sort((a, b) => rechnungen[a].score - rechnungen[b].score + Math.random() - 0.5);
         let i = 0;
         while (naechste.length < anzahlNaechste) {
-            let j = indecies[i];
+            let j = indices[i];
             let r = rechnungen[j];
-            console.log(naechste);
+
             if ((!naechste.includes(j)) && (gewaehlteReihen[r.a] || gewaehlteReihen[r.b])) {
                 naechste.push(j);
             }
@@ -218,18 +254,26 @@ window.addEventListener('load', function () {
     function pruefe() {
         if (resultat.innerText == geheim) {
             streak += 1;
-            if (audioEnabled == 1) {
+            if (entertainEnabled == 1) {
                 baam.play();
             }
+            // console.log(streak);
             console.log(streak);
             if (streak == streaklength) {
-                confcount += 500;
-                //alert("Juhui");
-                cheers.play()
-
                 streak = 0;
-                confetti.setCount(confcount);
-                document.getElementById("rain").click();
+                if (entertainEnabled == 1) {
+
+                    confcount += 500;
+                    cheers.play()
+                    if (durchschnitt < avthreshold) {
+                        shake();
+                    }
+
+
+                    confetti.setCount(confcount);
+                    document.getElementById("rain").click();
+                }
+
             }
             let addScore = 1;
             if (korrekt > 3) {
@@ -285,7 +329,7 @@ window.addEventListener('load', function () {
             }
             return;
         }
-        if (resultat.innerText.length < 2) {
+        if (resultat.innerText.length < 3) {
             resultat.innerText += key
         }
     }
@@ -374,7 +418,16 @@ window.addEventListener('load', function () {
         document.getElementById('okteilen').addEventListener('click', () => {
             teilen.style.display = "none";
         });
+
+        document.getElementById('entertainswitch').addEventListener('click', () => {
+            entertainEnabled = 1 - entertainEnabled;
+            entertainswitch.innerText = entertainSymbols[entertainEnabled];
+
+        });
+
+
         document.getElementById('audioswitch').addEventListener('click', () => {
+            //alert("hey");
             audioEnabled = 1 - audioEnabled;
             audioswitch.innerText = audioSymbols[audioEnabled];
             if (audioEnabled == 1) {
@@ -415,7 +468,27 @@ window.addEventListener('load', function () {
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker
                 .register("./serviceWorker.js")
-                .then(res => console.log("service worker registered"))
+                .then(reg => {
+                    console.log("service worker registered");
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        installingWorker.onstatechange = () => {
+                            switch (installingWorker.state) {
+                                case 'installed':
+                                    if (navigator.serviceWorker.controller) {
+                                        // new update available
+                                        setTimeout(() => document.location.reload(true), 1000);
+                                        caches.keys().then(keys => {
+                                            keys.forEach(key => caches.delete(key));
+                                            alert("sd")
+                                        })
+                                    }
+                                    break;
+                            }
+                        };
+                    };
+                }
+                )
                 .catch(err => console.log("service worker not registered", err))
         } else {
             console.log("no serviceWorker in navigator");
