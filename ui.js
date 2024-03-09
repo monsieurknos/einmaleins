@@ -26,8 +26,8 @@ window.addEventListener('load', function () {
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
-    let stroke = 0;
-    const strokelength = 2;
+    let streak = 0;
+    const streaklength = 10;
     let startzeit = 0;
     let letzteRichtig = 0;
     let durchschnitt = 0;
@@ -217,17 +217,17 @@ window.addEventListener('load', function () {
 
     function pruefe() {
         if (resultat.innerText == geheim) {
-            stroke += 1;
+            streak += 1;
             if (audioEnabled == 1) {
                 baam.play();
             }
-            console.log(stroke);
-            if (stroke == strokelength) {
+            console.log(streak);
+            if (streak == streaklength) {
                 confcount += 500;
-                alert("Juhui");
+                //alert("Juhui");
                 cheers.play()
 
-                stroke = 0;
+                streak = 0;
                 confetti.setCount(confcount);
                 document.getElementById("rain").click();
             }
@@ -253,7 +253,7 @@ window.addEventListener('load', function () {
             statistik();
             neueRechnung();
         } else {
-            stroke = 0;
+            streak = 0;
             confcount = 500;
             if (naechste[naechste.length - 1] != naechste[0]) {
                 naechste.push(naechste[0]);
