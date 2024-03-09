@@ -33,7 +33,11 @@ window.addEventListener('load', function () {
     let falsch = 0;
 
     let streak = 0;
+<<<<<<< HEAD
     const streaklength = 10
+=======
+    const streaklength = 2
+>>>>>>> dfe8ac6dc6534d924cceda2818098ee1c09e51ce
     const avthreshold = 4;
     let startzeit = 0;
     let mode = "mal";
