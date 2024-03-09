@@ -545,8 +545,8 @@ window.addEventListener('load', function () {
                 }
             }
         }
-        console.log("Doin fine...");
-        console.log(rechnungen.map(e => e.a+e.b));
+        //console.log("Doin fine...");
+        //console.log(rechnungen.map(e => e.a+e.b));
 
         loadScores();
         naechsteFuellen();
