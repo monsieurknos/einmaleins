@@ -26,16 +26,17 @@ window.addEventListener('load', function () {
 
     const cheers = new Audio("ogg/cheers.ogg");
     const baam = new Audio("ogg/baam.ogg");
+    const buzz = new Audio("ogg/wrong.ogg");
 
     let geheim = 0;
     let korrekt = 0;
     let falsch = 0;
 
     let streak = 0;
-    const streaklength = 5;
-    const avthreshold = 4.5;
+    const streaklength = 10
+    const avthreshold = 4;
     let startzeit = 0;
-
+    let mode = "mal";
     let letzteRichtig = 0;
     let durchschnitt = 0;
     let rechnungen = [];
@@ -202,6 +203,8 @@ window.addEventListener('load', function () {
         for (r of rechnungen) {
             r.score = 0;
         }
+        streak = 0;
+        confcount = 75;
         saveScores();
     }
 
@@ -213,6 +216,7 @@ window.addEventListener('load', function () {
     }
 
     function naechsteFuellen() {
+
         let indices = new Array(rechnungen.length).fill(0).map((e, i) => i);
         indices.sort((a, b) => rechnungen[a].score - rechnungen[b].score + Math.random() - 0.5);
         let i = 0;
@@ -220,9 +224,15 @@ window.addEventListener('load', function () {
             let j = indices[i];
             let r = rechnungen[j];
 
-            if ((!naechste.includes(j)) && (gewaehlteReihen[r.a] || gewaehlteReihen[r.b])) {
+            isOK = ((mode != "mal") ? true : (gewaehlteReihen[r.a] || gewaehlteReihen[r.b]))
+
+            if ((!naechste.includes(j)) && isOK) {
+
                 naechste.push(j);
+                if (r.a - r.b < 0) {
+                }
             }
+
             i++;
         }
     }
@@ -233,8 +243,23 @@ window.addEventListener('load', function () {
         let neu = rechnungen[naechste[0]];
         let a = neu.a;
         let b = neu.b;
-        geheim = a * b;
-        rechnung.innerText = `${a} · ${b}`
+
+        switch (mode) {
+            case 'mal':
+                geheim = a * b;
+                rechnung.innerText = `${a} · ${b}`
+                break;
+            case 'minus':
+                geheim = a - b;
+                rechnung.innerText = `${a} - ${b}`
+                break;
+            case 'plus':
+                geheim = a + b;
+                rechnung.innerText = `${a} + ${b}`
+                break;
+        }
+
+
         resultat.innerText = "";
         richtig.innerText = rechnung.innerText + " = " + geheim;
         if (audioEnabled == 1) {
@@ -257,13 +282,12 @@ window.addEventListener('load', function () {
             if (entertainEnabled == 1) {
                 baam.play();
             }
-            // console.log(streak);
-            console.log(streak);
+            //console.log(streak);
             if (streak == streaklength) {
                 streak = 0;
                 if (entertainEnabled == 1) {
 
-                    confcount += 500;
+                    confcount += 50;
                     cheers.play()
                     if (durchschnitt < avthreshold) {
                         shake();
@@ -298,7 +322,10 @@ window.addEventListener('load', function () {
             neueRechnung();
         } else {
             streak = 0;
-            confcount = 500;
+            confcount = 75;
+            if (entertainEnabled) {
+                buzz.play()
+            }
             if (naechste[naechste.length - 1] != naechste[0]) {
                 naechste.push(naechste[0]);
                 rechnungen[naechste[0]].score -= 3;
@@ -396,11 +423,24 @@ window.addEventListener('load', function () {
         document.querySelectorAll("#keypad div").forEach((el) => {
             el.addEventListener('click', klick);
         });
+
         document.getElementById('weiter').addEventListener('click', (ev) => {
             overlay.style.display = "none";
         });
         document.getElementById('clearstats').addEventListener('click', (ev) => {
             clearStats();
+        });
+        document.getElementById('modeselector').addEventListener('change', (ev) => {
+            mode = ev.target.value;
+            audioEnabled = 0;
+            if (mode != "mal") {
+                document.getElementById("reihen").style.visibility = "hidden";
+                document.getElementById("audioswitch").style.visibility = "hidden";
+                
+            } else {
+                document.getElementById("reihen").style.visibility = "visible";
+                document.getElementById("audioswitch").style.visibility = "visible";
+            }
         });
         document.getElementById('hamburger').addEventListener('click', () => {
             settings.style.display = "flex";
@@ -411,6 +451,8 @@ window.addEventListener('load', function () {
         document.getElementById('oksettings').addEventListener('click', () => {
             settings.style.display = "none";
             naechste = [];
+            rechnungen = [];
+            initRechnungen();
             clearStats();
             resetScores();
             neueRechnung();
@@ -438,8 +480,6 @@ window.addEventListener('load', function () {
         });
         loadReihen();
         document.querySelectorAll("#reihen div").forEach(e => {
-            //alert(e.innerHTML);
-            //console.log(e);
             let r = e.innerText;
             e.className = gewaehlteReihen[r] ? "on" : "off";
             e.addEventListener('click', function (e) {
@@ -496,9 +536,9 @@ window.addEventListener('load', function () {
     }
 
     function initRechnungen() {
-        for (let a = 2; a <= 10; a++) {
-            for (let b = 2; b <= 10; b++) {
-                rechnungen.push({ "a": a, "b": b, "score": 0 })
+        for (let a = 2; a <= ((mode == "mal") ? 10 : 20); a++) {
+            for (let b = 2; b <= ((mode == "mal") ? 10 : a); b++) {
+                rechnungen.push({ "a": a, "b": b, "score": 0 });
             }
         }
         loadScores();
