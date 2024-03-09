@@ -32,7 +32,7 @@
     </div>
     <div class="aufgabe">
         <span id="audioswitch" class="switch">🔇</span><span id="entertainswitch" class="switch">🔕</span> <span
-            id="rechnung">3 · 7</span> = <span id="resultat">21</span>
+            id="rechnung">3 - 7</span> = <span id="resultat">-4</span>
     </div>
     <div id="keypad">
         <div class="key">7</div>
@@ -54,8 +54,19 @@
         <div id="richtig">3 · 7 = 21</div>
         <div id="weiter" class="weiter">OK</div>
     </div>
+
     <div id="settings">
-        Reihen
+
+        <div id="mode">
+            <form>
+                <select name="mode" id="modeselector">
+                    <option value="mal">Mal</option>
+                    <option value="minus">Minus</option>
+                    <option value="plus">Plus</option>
+                </select>
+            </form>
+        </div>
+
         <form id="reihen">
             <div class="on">2</div>
             <div class="off">3</div>
@@ -65,12 +76,9 @@
             <div class="off">7</div>
             <div class="on">8</div>
             <div class="off">9</div>
-            <!--
-            <div class="off">11</div>
-            <div class="off">12</div>
-            <div class="off">13</div>
-            -->
         </form>
+
+
         <div id="hintergrund">
             <label for="uploadBgImage">Hintergrund</label><span id="resetbg"> ⟳</span>
             <input type='file' id="uploadBgImage" accept="image/png, image/jpeg, image/jpg" />
@@ -84,8 +92,11 @@
             Programmiert wurde die Seite von <a href="https://threema.id/HX3WS583?text=">Ivo Blöchliger</a> für seine
             Tochter.
         </div>
+
+
         <div id="oksettings" class="weiter">OK</div>
     </div>
+
     <div id="teilen">
         <img src="img/qrcode.svg">
         <div id="copyurl">https://einmaleins.bloechligair.ch/</div>
