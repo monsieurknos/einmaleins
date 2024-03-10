@@ -227,10 +227,7 @@ window.addEventListener('load', function () {
             isOK = ((mode != "mal") ? true : (gewaehlteReihen[r.a] || gewaehlteReihen[r.b]))
 
             if ((!naechste.includes(j)) && isOK) {
-
                 naechste.push(j);
-                if (r.a - r.b < 0) {
-                }
             }
 
             i++;
